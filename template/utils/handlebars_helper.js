@@ -128,6 +128,36 @@ define([
         return new Array(splits.length).join(fillChar) + splits[splits.length - 1];
     });
 
+    Handlebars.registerHelper('parentName', function(article, field) {
+        if(!field || !field.split || !article) {
+            return '';
+        }
+        return article.group + '-' + article.name + '-' + field.split('.')[0];
+    });
+    Handlebars.registerHelper('isChild', function(article, field) {
+    if(!field || !field.split || !article) {
+        return false;
+    }
+    return field.split('.').length > 1;
+    });
+    Handlebars.registerHelper('log', function(value) {
+        console.log('log', value);
+        return '';
+    });
+    Handlebars.registerHelper('getByIndex', function(array, index) {
+      return array[index];
+    });
+    Handlebars.registerHelper('showCaret', function(fields, index) {
+        const field = (fields[index] || {}).field;
+        const prevField = (fields[index - 1] || {}).field;
+        const nextField = (fields[index + 1] || {}).field;
+        console.log('field', field,'prevField', prevField,'nextField', nextField);
+        if(!field || !field.split || !prevField || !prevField.split || !nextField || !nextField.split) {
+            return false;
+        }
+        return field.split('.')[0] === nextField.split('.')[0] && field.split('.')[0] !== prevField.split('.')[0]
+    });
+
     /**
      * Convert Newline to HTML-Break (nl2br).
      *
