@@ -152,10 +152,10 @@ define([
         const prevField = (fields[index - 1] || {}).field;
         const nextField = (fields[index + 1] || {}).field;
         console.log('field', field,'prevField', prevField,'nextField', nextField);
-        if(!field || !field.split || !prevField || !prevField.split || !nextField || !nextField.split) {
+        if(!field || !field.split || !nextField || !nextField.split) {
             return false;
         }
-        return field.split('.')[0] === nextField.split('.')[0] && field.split('.')[0] !== prevField.split('.')[0]
+        return field.split('.')[0] === nextField.split('.')[0] && (!prevField || field.split('.')[0] !== prevField.split('.')[0]);
     });
 
     /**
